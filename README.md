@@ -163,51 +163,67 @@ There are two options available to view neuroimages.
 
 ```
 .
-├── data/                              # Input data, intermediate files, and generated outputs
-│   └── subjects/
-│       ├── sub0045/                   # Clean example subject for users to run through the workflow
-│       │   └── img/
-│       │       └── fs_seg/            # FreeSurfer-derived segmentation inputs
-│       │           ├── T1.nii.gz      # T1-weighted structural MRI, used as input
-│       │           ├── aseg.nii.gz    # Automated segmentation label map derived from the T1 image
-│       │           └── brain.nii.gz   # Skull-stripped T1 volume containing brain tissue only
-│       │
-│       └── sub0045_example/           # Completed example subject with intermediate and final outputs
-│           ├── img/
-│           │   └── fs_seg/            # FreeSurfer-derived segmentation inputs
-│           │       ├── T1.nii.gz
-│           │       ├── aseg.nii.gz
-│           │       └── brain.nii.gz
-│           ├── bet/                   # Example BET outputs
-│           ├── fast/                  # Example FAST outputs
-│           └── output/                # Example generated brain mesh and supporting files
-│ 
-├── docs/                              # Markdown documentation and visual guides
-│   ├── 01_Introduction.md             # Background, inputs, and preprocessing overview
-│   ├── 02_ImageProcess.ipynb          # Code for MRI preprocessing and image segmentation workflow
-│   ├── 03_FSLeyes.md                  # Guide for inspecting image-processing outputs
-│   ├── 04_MeshCreation.ipynb          # Code for Mesh generation, smoothing, and refinement workflow
-│   ├── 05_VisualiseMesh.md            # Guide for inspecting generated mesh outputs
-│   ├── 06_Simulation.md               # Notes on preparing meshes for FE simulation
-│   └── assets/                        # Images and media used in the documentation
+├── .devcontainer/                       # GitHub Codespaces configuration
+│   ├── devcontainer.json
+│   └── install_fsl.sh                   # Installs FSL in Codespaces
 │
-├── src/                               # Source code and supporting tools used by the workflow
-│   ├── brain_mesh_creation/           # Python package for mesh-generation utilities
+├── .github/
+│   └── workflows/                       # GitHub Actions for documentation and link checking
+│
+├── data/
+│   └── subjects/
+│       ├── sub0045/                     # Minimal example subject used by the workflow
+│       │   └── img/
+│       │       └── fs_seg/              # MRI and FreeSurfer-derived segmentation inputs
+│       └── sub0045_example/             # Completed example subject with reference outputs
+│
+├── docs/                                # Documentation pages and executable workflow notebooks
+│   ├── index.md                         # Documentation landing page
+│   ├── 01_Introduction.md               # Background, inputs, and expected folder structure
+│   ├── 02_ImageProcess.ipynb            # MRI preprocessing and segmentation workflow
+│   ├── 03_FSLeyes.md                    # Image inspection guide
+│   ├── 04_MeshCreation.ipynb            # Mesh generation, smoothing, and refinement workflow
+│   ├── 05_VisualiseMesh.md              # Mesh visualisation in LS-PrePost
+│   ├── 06_Simulation.md                 # Supporting files for downstream FE simulation
+│   └── assets/                          # Images, GIFs, and media used in the documentation
+│
+├── src/
+│   ├── brain_mesh_creation/              # Python package for mesh creation utilities
 │   │   ├── __init__.py
-│   │   ├── mesh_utils.py              # Python utilities for mesh processing and refinement
-│   │   └── bmctk.py                   # Script/module for brain mesh creation
-│   └── dependencies/                  # Non-Python supporting files required by the workflow
-│       └── rs/
-│           ├── a.out                  # Executable for mesh smoothing
-│           ├── look_up_table.txt      # Lookup table used during mesh creation
-│           └── material_properties.k  # FE material property file for the brain model
-│ 
-├── trame_nii_viewer.py                # Interactive web viewer script for inspecting NIfTIs
-├── mkdocs.yml                         # Configuration file for MkDocs
-├── pyproject.toml                     # Project metadata and dependency configuration
-├── requirements.txt                   # Optional pinned dependencies for local setup
-├── LICENSE.md                         # Project license
-└── README.md                          # This file; project overview and usage instructions
+│   │   ├── bmctk.py
+│   │   └── mesh_utils.py
+│   │
+│   └── dependencies/                     # Non-Python files used by the workflow
+│       ├── MNI152_T1_1mm_brain.nii.gz    # Reference image used by the pipeline
+│       ├── rs/                           # Mesh smoothing tools and lookup table
+│       │   ├── MeshSmoothing_02.cpp
+│       │   ├── look_up_table.txt
+│       │   ├── mesh_smoother_linux_x86_64
+│       │   ├── mesh_smoother_macos_arm64
+│       │   ├── mesh_smoother_macos_x86_64
+│       │   └── mesh_smoother_windows_x86_64.exe
+│       └── sim/                          # Example files for downstream FE simulation setup
+│           ├── run_simulation.k           # Master include file for assembling a simulation deck
+│           ├── material_properties.k      # Example material and section definitions
+│           ├── part_list_full.k           # Part definitions linking mesh regions to materials
+│           ├── set_list.k                 # Example part/set definitions for simulation setup
+│           ├── centre_of_gravity.k        # Reference point for applying head kinematics
+│           └── acceleration_rugby1.k      # Example acceleration loading file
+│
+├── utils/
+│   └── embed_images.py                   # Utility script for documentation image handling
+│
+├── trame_nii_viewer.py                   # Browser-based NIfTI viewer for Codespaces
+├── mkdocs.yml                            # MkDocs documentation-site configuration
+├── pyproject.toml                        # Python project metadata
+├── requirements.txt                      # Python dependencies
+├── Makefile                              # Convenience commands
+├── LICENSE.md                            # Project licence
+└── README.md                             # Project overview and usage entry point
+```
+
+The repository includes two versions of the example subject. The workflow uses `sub0045` as the minimal runnable example, while `sub0045_example` provides completed reference outputs for comparison. The `src/dependencies/sim/` files are provided only as example supporting files for downstream finite element simulation; they should be reviewed and adapted before use in a validated LS-DYNA simulation.
+
 ```
 The repository includes two versions of the subject. The workflow notebooks are set up to run on `sub0045` by default. The `sub0045_example` folder is provided for reference and comparison. You should use the `sub0045` folder when following the notebooks.
 
