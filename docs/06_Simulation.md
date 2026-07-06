@@ -1,169 +1,133 @@
-# Extension: Preparing the Mesh for LS-DYNA Simulation
+# Extension: Simulation-supporting files
 
-## Overview
+## Scope of this page
 
-After image segmentation and mesh creation, the brain mesh creation pipeline produces a subject-specific finite element mesh in LS-DYNA keyword `.k` format.
+After the mesh creation step, the pipeline produces a subject-specific brain mesh in LS-DYNA keyword (`.k`) format. This page explains what extra files are normally needed alongside that generated mesh if the model is later used for finite element simulation.
 
-Finite element simulation setup is outside the main scope of this repository. However, this page provides a brief demonstration of how the generated mesh can be prepared for downstream FE simulation after `04_MeshCreation.ipynb`.
+This repository does **not** provide a complete, validated, ready-to-run simulation deck. Instead, it provides an example set of supporting keyword files to show how a generated mesh can be organised for downstream LS-DYNA simulations.
 
-This page briefly introduces material assignment, an example rugby head impact loading file, and how these files can be organised using LS-DYNA `*INCLUDE` statements.
+## Files needed alongside the generated mesh
 
----
-
-## 1. Material assignment
-
-The generated mesh preserves anatomical detail by assigning different LS-DYNA part numbers to the segmented brain and head structures.
-
-For FE simulation, these parts need to be linked to material models. In the example files provided with this repository, the material and section definitions are stored in:
+A simulation setup normally needs more than the mesh file itself. A reasonable list of files for a subject-specific brain simulation would look like this:
 
 ```text
-src/dependencies/sim/material_properties.k
-```
-
-This file contains example LS-DYNA material definitions for the main tissue classes used by the model, including skin, grey matter, white matter, CSF, brainstem, skull, falx, tentorium, dura mater, and pia mater.
-
-The anatomical part definitions and their assigned material IDs are stored in:
-
-```text
-data/subjects/sub0045/visualise/part_list_full.k
-```
-
-Each `*PART` card links an anatomical structure to a material ID (`mid`). For example:
-
-```text
-*PART
-Left-Cerebral-Cortex
-$#     pid     secid       mid     eosid      hgid      grav    adpopt      tmid
-         3         1         4         0         4         0         0         0
-```
-
-Here, the left cerebral cortex has part ID `3` and is assigned material ID `4`.
-
-A simplified summary of the material IDs used in the example setup is shown below.
-
-| Material ID | Tissue class | Example parts |
-|---|---|---|
-| `2` | Skull | `Skull` |
-| `3` | CSF / ventricles | `CSF`, lateral ventricles, 3rd ventricle, 4th ventricle |
-| `4` | Grey matter / deep grey matter | cortex, thalamus, caudate, putamen, hippocampus, amygdala |
-| `5` | White matter | cerebral white matter, cerebellar white matter, corpus callosum |
-| `6` | Brainstem | `Brain-Stem` |
-| `7` | Skin | `Skin` |
-| `12` | Falx / dura / tentorium | `Falx`, `Dura_Matter`, `Tentorium` |
-| `15` | Pia mater | `Pia_Matter` |
-
-Some deep brain structures are retained as separate anatomical parts but are assigned to broader tissue classes because region-specific experimental material data are not currently available for every structure. This means the anatomical segmentation is preserved, while the material assignment can still be updated in the future without regenerating the mesh.
-
-> **Note:** The provided material property file is an example. Users should check and adapt material parameters before using the model for a new scientific or clinical application.
-
----
-
-## 2. Example rugby head impact loading
-
-An example rugby head impact loading file is provided in:
-
-```text
-src/dependencies/sim/acceleration_rugby1.k
-```
-
-This file demonstrates how head impact kinematics can be provided to the model. The example contains linear and rotational head kinematics from a rugby impact.
-
-The acceleration curves are shown below.
-
-![Example rugby head impact loading curves](assets/06_acceleration_rugby1.png)
-
-_The figure shows linear acceleration in the x, y, and z directions, and rotational acceleration in the x, y, and z directions._
-
----
-
-## 3. Example LS-DYNA _include_ structure
-
-A master LS-DYNA keyword file can be used to organise the mesh, material definitions, part definitions, set definitions, and loading file.
-
-For example, a demonstration master keyword file could be named `run_simulation.k`:
-
-```text
-*KEYWORD
-
-$ -------------------------------------------------------------------------
-$ Brain mesh
-$ -------------------------------------------------------------------------
-*INCLUDE
-mesh_smoothed_revised.k
-
-$ -------------------------------------------------------------------------
-$ Material definitions
-$ -------------------------------------------------------------------------
-*INCLUDE
-src/dependencies/sim/material_properties.k
-
-$ -------------------------------------------------------------------------
-$ Part and set definitions
-$ -------------------------------------------------------------------------
-*INCLUDE
-data/subjects/sub0045/visualise/part_list_full.k
-*INCLUDE
-data/subjects/sub0045/visualise/set_list.k
-
-$ -------------------------------------------------------------------------
-$ Rugby head impact loading example
-$ -------------------------------------------------------------------------
-*INCLUDE
-src/dependencies/sim/acceleration_rugby1.k
-
-*END
-```
-
-In LS-DYNA keyword files, each `*INCLUDE` card points to one file. Therefore, the `*INCLUDE` keyword is repeated for each file being included.
-
-This example is intended to show how the files can be organised. It is not provided as a complete runnable simulation input. The exact include paths should be adapted depending on where the subject-specific mesh and simulation files are stored.
-
-For example, if the files are copied into a subject-specific simulation folder:
-
-```text
-data/subjects/<subject_name>/simulation/
+data/subjects/<subject_id>/simulation/
 ├── run_simulation.k
 ├── mesh_smoothed_revised.k
 ├── material_properties.k
 ├── part_list_full.k
 ├── set_list.k
+├── centre_of_gravity.k
 └── acceleration_rugby1.k
 ```
 
-> **Note:** This repository the anatomical mesh and provides example material and loading keyword files. It does not provide a complete FE simulation setup. Users who wish to run simulations should define any additional solver settings and simulation controls according to their own modelling requirements.
+The same support files are provided as examples in:
 
----
+```text
+src/dependencies/sim/
+```
 
-## 4. Example simulation output
+| File | Role |
+|---|---|
+| `mesh_smoothed_revised.k` | Subject-specific mesh generated by the this pipeline. This is the anatomical model that will be simulated. |
+| `run_simulation.k` | Master keyword file showing the recommended `*INCLUDE` structure. It collects the mesh, materials, part definitions, sets, centre of gravity, and example loading file. |
+| `material_properties.k` | Example material, section, and hourglass definitions for the main tissue classes. These values are provided for demonstration and must be checked before scientific use. |
+| `part_list_full.k` | LS-DYNA `*PART` definitions linking each anatomical part ID to a section ID and material ID. Part IDs preserve anatomical labels from the mesh. |
+| `set_list.k` | Example `*SET_PART_LIST` definitions grouping parts into useful model regions, such as all parts, intracranial solid parts, meninges, skull, and skin. |
+| `centre_of_gravity.k` | Placeholder centre-of-gravity reference node. The coordinates must be replaced with the correct subject/model-specific centre of gravity before running a simulation. |
+| `acceleration_rugby1.k` | Example rugby head-impact kinematic loading file. It is included to show how loading data can be organised, not to define a universal loading condition. |
 
-The following animation shows an example simulation output, change of maximum principal strain, visualised in LS-PrePost.
+Part and set definitions are introduced earlier when inspecting the mesh structure. Here, they are only revisited to explain how they fit into a simulation deck.
+
+## Example include structure
+
+The provided `run_simulation.k` file demonstrates the include structure:
+
+```text
+*KEYWORD
+
+*INCLUDE
+mesh_smoothed_revised.k
+
+*INCLUDE
+material_properties.k
+
+*INCLUDE
+part_list_full.k
+
+*INCLUDE
+set_list.k
+
+*INCLUDE
+centre_of_gravity.k
+
+*INCLUDE
+acceleration_rugby1.k
+
+*END
+```
+
+Each `*INCLUDE` card points to one keyword file. In practice, users should copy the example support files into a subject-specific simulation folder, then edit the paths or filenames so they match the generated mesh and any customised simulation inputs.
+
+If a support file has been exported from LS-PrePost as a complete standalone keyword file, it may contain its own `*KEYWORD` and `*END` lines. For a clean include-based simulation deck, keep `*KEYWORD` and `*END` in the master file and check whether nested wrappers need to be removed from included fragments.
+
+## Material and part assignment
+
+The generated mesh uses LS-DYNA part IDs to preserve anatomical regions. The `part_list_full.k` file assigns those part IDs to material IDs through `*PART` cards. For example, cerebral cortex parts are assigned to grey matter material properties, cerebral white matter and corpus callosum parts are assigned to white matter material properties, ventricles and CSF spaces are assigned to CSF properties, and meninges are assigned shell material definitions.
+
+The material assignment is intentionally separate from the mesh. This means material parameters can be reviewed or updated without regenerating the subject-specific anatomical mesh.
+
+> **Important:** The provided material file is an example. Users should verify material models, density, units, section definitions, hourglass settings, and any validation assumptions before using the model for a new scientific or clinical question.
+
+## Centre of gravity
+
+The centre of gravity is needed when head kinematics are applied or interpreted about a reference point. This is particularly important for rotational acceleration because the selected reference point changes how the motion is applied to the model.
+
+The provided `centre_of_gravity.k` file contains a placeholder reference node:
+
+```text
+*NODE
+999999 0.0 0.0 0.0
+```
+
+The `0.0 0.0 0.0` coordinates are not intended to be used directly. They should be replaced with the correct centre-of-gravity coordinates for the model and coordinate system being simulated.
+
+## Example acceleration file
+
+The `acceleration_rugby1.k` file provides an example rugby impact loading file. It demonstrates how impact kinematics can be stored separately from the mesh and then included through the master simulation file.
+
+The example loading file should be treated as demonstration data only. Users should replace it with loading curves that match their own impact, experimental setup, unit system, filtering choices, and modelling assumptions.
+
+## What is still required for a real simulation
+
+The files above explain the minimum supporting structure around the generated mesh, but a real LS-DYNA simulation may also require additional cards depending on the modelling question, for example:
+
+- contact definitions;
+- boundary conditions or prescribed motion cards;
+- solver controls and timestep settings;
+- damping or mass-scaling choices;
+- database output requests;
+- termination time;
+- checks for unit consistency;
+- model validation against relevant experimental or clinical data.
+
+Therefore, this page should be read as an explanation of the supporting files needed around the generated mesh, not as a guarantee that the example files form a complete simulation setup.
+
+## Example simulation output
+
+A finite element simulation can output time-dependent mechanical responses of the head model, such as nodal displacement, velocity, acceleration, pressure, stress, strain, and strain rate, depending on the requested LS-DYNA database outputs. These raw outputs are usually inspected in LS-PrePost and may then be further post-processed to calculate derived brain injury metrics.
+
+The animation below shows an example of a post-processed strain visualisation. It is not a direct mesh-generation output, and the displayed first Lagrange strain field requires additional simulation setup and post-processing after the LS-DYNA run.
 
 ![Example brain strain simulation output](assets/brain-strain-demo.gif)
 
-This example shows how the generated brain mesh can be used in downstream FE simulations. The simulation setup, loading condition, solver settings, and post-processing choices should be selected according to the scientific question being studied.
+## Applications
 
----
+After the subject-specific brain mesh has been combined with appropriate simulation files, it can be used for downstream finite element studies of head impact biomechanics. Example applications include:
 
-## 5. Application in traumatic brain injury and iNPH research
+* **Estimating tissue-level brain response under head impact loading.** FE head models have been used to estimate intracranial pressure, stress, strain, and strain rate under impact conditions, supporting studies of traumatic brain injury mechanisms. See [Mao et al. (2013)](https://doi.org/10.1115/1.4025101) and [Madhukar & Ostoja-Starzewski (2019)](https://doi.org/10.1007/s10439-019-02205-4).
+* **Evaluating injury metrics and impact severity.** Simulations can be used to compare kinematic injury predictors with tissue-level brain responses, such as strain-based metrics. See [Kleiven (2007)](https://pubmed.ncbi.nlm.nih.gov/18278592/).
+* **Comparing subject-specific anatomy or loading conditions.** Subject-specific meshes allow researchers to study how anatomical variation, impact direction, rotational acceleration, or loading duration may influence predicted brain deformation.
+* **Testing modelling assumptions.** Simulation studies depend on material properties, contacts, boundary conditions, and validation strategy. Brain material behaviour is commonly described using viscoelastic or hyper-viscoelastic formulations informed by experimental tissue testing. See [Miller & Chinzei (2002)](https://doi.org/10.1016/S0021-9290%2801%2900234-2) and [Hrapko et al. (2006)](https://doi.org/10.3233/BIR-2006-43S101).
 
-The brain mesh creation pipeline provides the anatomical basis for subject-specific finite element head models. Although the demo mesh generated in this repository is not independently validated as a new model, models generated using this modelling framework have been evaluated and applied in previous studies.
-
-In traumatic brain injury research, model predictions of brain displacement have been compared with controlled cadaveric impact experiments. Across multiple rapid head rotation cases, these models achieved an average CORA score of 0.60 when compared with experimentally measured brain motion (Alshareef et al., 2018, 2020; Duckworth et al., 2022).
-
-The models have also been used to investigate tissue-level deformation during head impacts. Previous studies reported that predicted regions of high strain and strain rate overlapped with locations associated with chronic traumatic encephalopathy pathology and microbleeds (Ghajari et al., 2017; Duckworth et al., 2022). Further work used model-predicted strain rate patterns to provide a biomechanical explanation for loss of consciousness following head impact (Zimmerman et al., 2023).
-
-Beyond traumatic brain injury, models generated using this pipeline have also been applied to idiopathic normal pressure hydrocephalus (iNPH). In this context, the model was used to simulate the complex morphological changes associated with ventricular enlargement and brain deformation. The simulated morphology reproduced diagnostic imaging biomarkers with high accuracy, including the callosal angle and z-Evans index, with deviations of 0.7% and 1.8%, respectively. The model also predicted tissue damage locations that were consistent with MRI observations in patients with iNPH (Darvishi et al., 2025; Del Giovane et al., 2026).
-
-Together, these studies show that subject-specific finite element models generated using the brain mesh creation pipeline can support biomechanical investigations across different neurological conditions, including traumatic brain injury and iNPH.
-
----
-
-## References
-
-- Alshareef A, Giudice JS, Forman J, et al (2020) Biomechanics of the human brain during dynamic rotation of the head. J Neurotrauma 37:1546–1555
-- Alshareef A, Giudice JS, Forman J, et al (2018) A novel method for quantifying human in situ whole brain deformation under rotational loading using sonomicrometry. J Neurotrauma 35:780–789
-- Duckworth H, Azor A, Wischmann N, et al (2022) A finite element model of cerebral vascular injury for predicting microbleeds location. Front Bioeng Biotechnol 10:860112
-- Darvishi V, Del Giovane M, David MCB, et al (2025) Towards a Deeper Understanding of Axonal Injury Mechanisms Using a Novel Biomechanical Model of Normal Pressure Hydrocephalus. Injury Biomechanics Symposium
-- Del Giovane M, Darvishi V, David MC, et al (2026) Modelling the effect of ventricular expansion on white matter in normal pressure hydrocephalus. Under revision at Brain
-- Ghajari M, Hellyer PJ, Sharp DJ (2017) Computational modelling of traumatic brain injury predicts the location of chronic traumatic encephalopathy pathology. Brain 140:333–343
-- Zimmerman KA, Cournoyer J, Lai H, et al (2023) The biomechanical signature of loss of consciousness: computational modelling of elite athlete head injuries. Brain 146:3063–3078
+The simulation-related files provided here are intended only as a starting point for simulation preparation. They should be reviewed, adapted, and validated according to the specific research question, solver version, loading condition, and material model being used. 
