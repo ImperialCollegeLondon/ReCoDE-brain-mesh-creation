@@ -224,10 +224,6 @@ There are two options available to view neuroimages.
 
 The repository includes two versions of the example subject. The workflow uses `sub0045` as the minimal runnable example, while `sub0045_example` provides completed reference outputs for comparison. The `src/dependencies/sim/` files are provided only as example supporting files for downstream finite element simulation; they should be reviewed and adapted before use in a validated LS-DYNA simulation.
 
-```
-The repository includes two versions of the subject. The workflow notebooks are set up to run on `sub0045` by default. The `sub0045_example` folder is provided for reference and comparison. You should use the `sub0045` folder when following the notebooks.
-
-
 <!-- Roadmap.
 Identify the project core (a minimal working example). This
 is what you should develop first, ideally by week 6. Defining
@@ -304,11 +300,10 @@ Completed tasks are marked with an x between the square brackets.
 | Extension                 | 30 min         |
 | **Total Estimated Time**  | **5 hours**    |
 
+## Citation 📄
 
-<!-- Any references, or other resources. -->
-<!-- ## Additional Resources 🔗
-
-- Placeholder when our paper has a preprint -->
+Please cite this preprint if you use this repository for your study: 
+> Darvishi V, Chan EY, Duckworth H, Parker TD, Sharp DJ, Ghajari M. PARS: an automated, open-source pipeline for subject-specific finite element head modelling from MRI. bioRxiv. 2026:2026-07.
 
 ## Licence 📄
 
