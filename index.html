@@ -1,0 +1,1220 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+        <link rel="next" href="01_Introduction/">
+      
+      
+      <link rel="icon" href="assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+    
+    
+      
+        <title>ReCoDE-brain-mesh-creation</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.2afb09e1.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#from-mri-to-mesh-finite-element-brain-model-creation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://imperialcollegelondon.github.io/ReCoDE-home/" title="ReCoDE-brain-mesh-creation" class="md-header__button md-logo" aria-label="ReCoDE-brain-mesh-creation" data-md-component="logo">
+      
+  <img src="assets/iclogo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ReCoDE-brain-mesh-creation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://imperialcollegelondon.github.io/ReCoDE-home/" title="ReCoDE-brain-mesh-creation" class="md-nav__button md-logo" aria-label="ReCoDE-brain-mesh-creation" data-md-component="logo">
+      
+  <img src="assets/iclogo.png" alt="logo">
+
+    </a>
+    ReCoDE-brain-mesh-creation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#disciplinary-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disciplinary Background 🔬
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning Outcomes 🎓
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites ✅
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites ✅">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#academic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Academic 📚
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system" class="md-nav__link">
+    <span class="md-ellipsis">
+      System 💻
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Software Tools 🛠️
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Started 🚀
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started 🚀">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-the-notebooks-on-github-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try the notebooks on GitHub Codespaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#view-neuroimages-in-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      View neuroimages in Codespaces
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure 🗂️
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Roadmap 🗺️
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Roadmap 🗺️">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core 🧩
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extensions 🔌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practice-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practice Notes 📝
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimated-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estimated Time ⏳
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Citation 📄
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#licence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Licence 📄
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Background: Brain Anatomy, MRI, and Input Images
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02_ImageProcess/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Image Processing: Preparing Labelled Geometry for Meshing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03_FSLeyes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Image Inspection: Checking Processed Outputs Before Meshing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04_MeshCreation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mesh Creation: Building, Smoothing, and Refining the Brain Mesh
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05_VisualiseMesh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mesh Inspection: Checking Mesh Outputs Before Simulation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06_Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Extension: Simulation-supporting files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#disciplinary-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disciplinary Background 🔬
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning Outcomes 🎓
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites ✅
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites ✅">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#academic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Academic 📚
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system" class="md-nav__link">
+    <span class="md-ellipsis">
+      System 💻
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Software Tools 🛠️
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Started 🚀
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started 🚀">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-the-notebooks-on-github-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try the notebooks on GitHub Codespaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#view-neuroimages-in-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      View neuroimages in Codespaces
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure 🗂️
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Roadmap 🗺️
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Roadmap 🗺️">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core 🧩
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extensions 🔌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practice-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practice Notes 📝
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimated-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estimated Time ⏳
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Citation 📄
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#licence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Licence 📄
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<!--
+This includes your top-level README as you index page i.e. homepage.
+
+This will not be the best approach for all exemplars, so feel free to customise
+your index page as you see fit.
+-->
+
+<!--
+This README template is designed with dual purpose.
+
+It should help you think about and plan various aspects of your
+exemplar. In this regard, the document need not be completed in
+a single pass. Some sections will be relatively straightforward
+to complete, others may evolve over time.
+
+Once complete, this README will serve as the landing page for
+your exemplar, providing learners with an outline of what they
+can expect should they engage with the work.
+
+Recall that you are developing a software project and learning
+resource at the same time. It is important to keep this in mind
+throughout the development and plan accordingly.
+-->
+
+<!-- Your exemplar title. Make it sound catchy! -->
+<h1 id="from-mri-to-mesh-finite-element-brain-model-creation">From MRI to Mesh: Finite Element Brain Model Creation</h1>
+<!-- A brief description of your exemplar, which may include an image -->
+<p>This exemplar provides a reproducible workflow for structural magnetic resonance (MR) images to be transformed into a finite element brain mesh in LS-DYNA keyword (<code>.k</code>) format. It combines image preprocessing, segmentation and meshing in one clear MRI-to-mesh workflow. It also contains optional post-processing to enable a downstream FE simulations. </p>
+<p><img alt="Brain strain demo" src="assets/brain-strain-demo.gif" /></p>
+<!-- Author information -->
+<p>This brain mesh creation pipeline was scientifically developed by Dr Mazdak Ghajari, Dr Harry Duckworth, Mr Vahid Darvish, and Ms Emily Chan, all in the <a href="https://www.imperial.ac.uk/human-experience-analysis-design/">HEAD Lab</a> at Imperial College London. </p>
+<p>This exemplar was developed at Imperial College London by Ms Emily Chan in collaboration with Dr Miruna Serina from Research Software Engineering and Dr Jianliang Gao from Research Computing &amp; Data Science at the Early Career Researcher Institute.</p>
+<p>With suitable MRI-derived inputs, this pipeline allows users to turn an individual's brain anatomy into a subject-specific finite element mesh.</p>
+<!-- Background. Tell learners about why this exemplar is useful. -->
+<h2 id="disciplinary-background">Disciplinary Background 🔬</h2>
+<p>In brain biomechanics research, subject-specific anatomical models are often generated from structural MRI data and converted into finite element meshes that can be used to simulate tissue deformation under mechanical loading. These models are widely used traumatic brain injury (TBI) research, where understanding how anatomy influences brain strain can help interpret injury mechanisms and improve predictive modelling. At the <a href="https://www.imperial.ac.uk/human-experience-analysis-design/">HEAD Lab</a>, researchers have used the mesh generation pipeline to generate hundreds of brain FE models, enabling large-scale FE simulations in TBI research, particularly how anatomical differences of the brain affects injury. </p>
+<!-- Learning Outcomes. 
+Aim for 3 - 4 points that illustrate what knowledge and
+skills will be gained by studying your ReCoDE exemplar. -->
+<h2 id="learning-outcomes">Learning Outcomes 🎓</h2>
+<p>After completing this exemplar, you will be able to:</p>
+<ul>
+<li><strong>Process and visualise neuroimaging data</strong> using FSL, a useful open-source neuroimaging software library. </li>
+<li><strong>Interpret the structure of an LS-DYNA mesh file</strong>, understand how nodes, elements, parts, and model definitions. </li>
+<li><strong>Generate a subject-specific volumetric finite element brain mesh</strong> from structural MRI-derived inputs.</li>
+<li>(Optional) Understand the basic requirements for <strong>setting up an LS-DYNA simulation</strong>, including the role of supporting files needed alongside the generated mesh.</li>
+</ul>
+<!-- Audience. Think broadly as to who will benefit. -->
+<!-- ## Target Audience 🎯
+This exemplar is aimed at scientists and researchers in biomechanics, biomedical engineering, neurosciences, and computational modelling who want a practical experience in generating subject-specific finite element brain meshes from MR images. 
+
+The generated FE brain mesh, together with the simulation file in the final step, will also enable FE brain simulation that can be applied to traumatic brain injury research. 
+ -->
+
+<!-- Requirements-->
+<h2 id="prerequisites">Prerequisites ✅</h2>
+<h3 id="academic">Academic 📚</h3>
+<ul>
+<li>Basic familiarity with Python, including using libaries and calling functions.</li>
+<li>Basic familiarity with simple Bash commands in Jupyter notebook environment, such as navigating directories, writing shell commands, and handling files (e.g. <code>cd</code>, <code>cp</code>, <code>echo</code>).</li>
+<li>A general awareness of finite element modelling is helpful, but not required.</li>
+</ul>
+<h3 id="system">System 💻</h3>
+<ul>
+<li>Python 3.9 and above</li>
+<li>Jupyter Notebook</li>
+<li>FSL v6.0.7 and above, installed (requires ~20GB disk space) and configured properly</li>
+<li>Sufficient disk space (estimate 2GB) for intermediate image files, and generated meshes</li>
+<li>Ls-PrePost for visualising output brain mesh </li>
+</ul>
+<!-- Software. What languages, libraries, software you use. -->
+<h2 id="software-tools">Software Tools 🛠️</h2>
+<ul>
+<li>Programming language: Python, with some Bash commands used within Jupyter notebooks. </li>
+<li><a href="https://lsdyna.ansys.com/ls-prepost-2/">LS-Prepost</a>: a GUI tool for pre- and post-processing of finite element models. </li>
+<li><a href="https://fsl.fmrib.ox.ac.uk/fsl/docs/install/index.html">FSL - FMRIB Software Library</a>: a library for brain imaging data analysis. </li>
+</ul>
+<p>FSL must be correctly configured before running the notebooks. In particular, the <code>FSLDIR</code> environment variable must be set, and the FSL command-line tools must be available from your terminal.</p>
+<p>After installing FSL, follow the official <a href="https://fsl.fmrib.ox.ac.uk/fsl/docs/install/configuration.html">FSL configuration instructions</a>. For <code>bash</code> or <code>zsh</code>, this usually means adding the following lines to your shell configuration file, such as <code>~/.bashrc</code>, <code>~/.bash_profile</code>, or <code>~/.zshrc</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># FSL Setup</span>
+<span class="nv">FSLDIR</span><span class="o">=</span>~/fsl
+<span class="nv">PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">FSLDIR</span><span class="si">}</span>/share/fsl/bin:<span class="si">${</span><span class="nv">PATH</span><span class="si">}</span>
+<span class="nb">export</span><span class="w"> </span>FSLDIR<span class="w"> </span>PATH
+.<span class="w"> </span><span class="si">${</span><span class="nv">FSLDIR</span><span class="si">}</span>/etc/fslconf/fsl.sh
+</code></pre></div>
+<!-- Quick Start Guide. Tell learners how to engage with the exemplar. -->
+<h2 id="getting-started">Getting Started 🚀</h2>
+<p align="center">
+  <a href="assets/step-guide.png">
+    <img src="assets/step-guide.png" alt="Step guide" width="700">
+  </a>
+</p>
+
+<p>The main step-by-step materials are stored together in <code>docs/</code>. This folder contains both the explanatory Markdown pages and the executable notebooks used in the MRI-to-mesh pipeline.</p>
+<ol>
+<li>Fulfil the <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation/blob/main/#prerequisites">Prerequisites</a>.</li>
+<li>Follow <code>01_Introduction.md</code> for background information, required inputs, and the expected folder structure.</li>
+<li>Run <code>02_ImageProcess.ipynb</code> to complete image processing and image segmentation.</li>
+<li>Follow <code>03_FSLeyes.md</code> to inspect selected image-processing outputs in FSLeyes and check whether the segmentation worked as expected.</li>
+<li>Run <code>04_MeshCreation.ipynb</code> to generate, smooth, and refine the finite element brain mesh.</li>
+<li>Follow <code>05_VisualiseMesh.md</code> to inspect the generated brain mesh in LS-PrePost by rotating, slicing, and checking the model geometry.</li>
+<li>Optional: follow <code>06_Simulation.md</code> to prepare supporting files for downstream finite element simulation.</li>
+</ol>
+<p>Apart from running the notebooks in your local environment, they can also be run directly in GitHub Codespaces using the instructions in <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation/blob/main/#try-code-on-github-with-codespaces">Try code on GitHub with Codespaces</a>.</p>
+<h3 id="try-the-notebooks-on-github-codespaces">Try the notebooks on GitHub Codespaces</h3>
+<p>You can run the notebooks directly in GitHub Codespaces without setting up the environment locally. The steps are shown in the image below.</p>
+<ol>
+<li>In the repository, click the green Code* button, open the <em>Codespaces</em> tab, and click the three-dot <em>"..."</em> menu.</li>
+<li>Select <em>New with options...</em> from the menu.</li>
+<li>Under <em>Machine type</em>, choose <em>8-core, 32 GB RAM, 64 GB storage</em> or higher (this requires signing up to <a href="https://education.github.com/pack">GitHub Student Developer Pack</a> if you have not already done so).</li>
+<li>Review the selected settings, then click <em>Create codespace</em>.</li>
+<li>Wait for GitHub Codespaces to launch VS Code in the browser and finish configuring the environment.</li>
+<li>Open the notebook you want to run from the <code>notebooks/</code>. Click <em>Select Kernel</em>, then choose <em>Python Environments...</em>.</li>
+<li>Select the <em>Recommended</em> Python environment, for example the <code>base</code> environment, to run the notebook. </li>
+</ol>
+<p align="center">
+  <a href="assets/codespaces-collage.png">
+    <img src="assets/codespaces-collage.png" alt="Step-by-step guide for setting up a GitHub Codespace" width="900">
+  </a>
+</p>
+
+<h3 id="view-neuroimages-in-codespaces">View neuroimages in Codespaces</h3>
+<p>There are two options available to view neuroimages.</p>
+<ul>
+<li>Option1 (maybe slow) : Use Trame to view images</li>
+<li>Find trame_nii_viewer.py and modify the line (16) <code>/workspaces/ReCoDE-brain-mesh-creation/data/subjects/avg-male/tmp</code> to the imaging files directory you want to view. Then save the updated trame_nii_viewer.py.</li>
+<li>
+<p>in a Codespace terminal, run the following command:
+  <div class="highlight"><pre><span></span><code>fslpython trame_nii_viewer.py
+</code></pre></div>
+  A new tab will be opened on your web browser to view images. (<strong>be aware</strong>: if it is slow to load images, please refresh the Trame viewer tab)</p>
+</li>
+<li>
+<p>Option2 (fast): Use <code>fsleyes render</code> command to view images</p>
+</li>
+<li>
+<p>In Codespace terminal, run the following command:
+  <div class="highlight"><pre><span></span><code>fsleyes render --outfile output_T1.png data/subjects/sub0045/img/fs_seg/T1.nii.gz -cm brain_colours_nih
+</code></pre></div></p>
+<ul>
+<li>Modify the output filename <code>output_T1.png</code> as needed. This will be the exported PNG image.</li>
+<li>Modify the input file path <code>data/subjects/sub0045/img/fs_seg/T1.nii.gz</code>i f you want to render another NIfTI file.</li>
+<li>Modify <code>-cm brain_colours_nih</code> if you want to use a different colourmap. More colourmap codes can be found at <a href="https://open.oxcin.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/command_line.html">fsleyes command</a></li>
+</ul>
+</li>
+</ul>
+<!-- Repository structure. Explain how your code is structured. -->
+<h2 id="project-structure">Project Structure 🗂️</h2>
+<div class="highlight"><pre><span></span><code>.
+├── .devcontainer/                       # GitHub Codespaces configuration
+│   ├── devcontainer.json
+│   └── install_fsl.sh                   # Installs FSL in Codespaces
+│
+├── .github/
+│   └── workflows/                       # GitHub Actions for documentation and link checking
+│
+├── data/
+│   └── subjects/
+│       ├── sub0045/                     # Minimal example subject used by the workflow
+│       │   └── img/
+│       │       └── fs_seg/              # MRI and FreeSurfer-derived segmentation inputs
+│       └── sub0045_example/             # Completed example subject with reference outputs
+│
+├── docs/                                # Documentation pages and executable workflow notebooks
+│   ├── index.md                         # Documentation landing page
+│   ├── 01_Introduction.md               # Background, inputs, and expected folder structure
+│   ├── 02_ImageProcess.ipynb            # MRI preprocessing and segmentation workflow
+│   ├── 03_FSLeyes.md                    # Image inspection guide
+│   ├── 04_MeshCreation.ipynb            # Mesh generation, smoothing, and refinement workflow
+│   ├── 05_VisualiseMesh.md              # Mesh visualisation in LS-PrePost
+│   ├── 06_Simulation.md                 # Supporting files for downstream FE simulation
+│   └── assets/                          # Images, GIFs, and media used in the documentation
+│
+├── src/
+│   ├── brain_mesh_creation/              # Python package for mesh creation utilities
+│   │   ├── __init__.py
+│   │   ├── bmctk.py
+│   │   └── mesh_utils.py
+│   │
+│   └── dependencies/                     # Non-Python files used by the workflow
+│       ├── MNI152_T1_1mm_brain.nii.gz    # Reference image used by the pipeline
+│       ├── rs/                           # Mesh smoothing tools and lookup table
+│       │   ├── MeshSmoothing_02.cpp
+│       │   ├── look_up_table.txt
+│       │   ├── mesh_smoother_linux_x86_64
+│       │   ├── mesh_smoother_macos_arm64
+│       │   ├── mesh_smoother_macos_x86_64
+│       │   └── mesh_smoother_windows_x86_64.exe
+│       └── sim/                          # Example files for downstream FE simulation setup
+│           ├── run_simulation.k           # Master include file for assembling a simulation deck
+│           ├── material_properties.k      # Example material and section definitions
+│           ├── part_list_full.k           # Part definitions linking mesh regions to materials
+│           ├── set_list.k                 # Example part/set definitions for simulation setup
+│           ├── centre_of_gravity.k        # Reference point for applying head kinematics
+│           └── acceleration_rugby1.k      # Example acceleration loading file
+│
+├── utils/
+│   └── embed_images.py                   # Utility script for documentation image handling
+│
+├── trame_nii_viewer.py                   # Browser-based NIfTI viewer for Codespaces
+├── mkdocs.yml                            # MkDocs documentation-site configuration
+├── pyproject.toml                        # Python project metadata
+├── requirements.txt                      # Python dependencies
+├── Makefile                              # Convenience commands
+├── LICENSE.md                            # Project licence
+└── README.md                             # Project overview and usage entry point
+</code></pre></div>
+<p>The repository includes two versions of the example subject. The workflow uses <code>sub0045</code> as the minimal runnable example, while <code>sub0045_example</code> provides completed reference outputs for comparison. The <code>src/dependencies/sim/</code> files are provided only as example supporting files for downstream finite element simulation; they should be reviewed and adapted before use in a validated LS-DYNA simulation.</p>
+<!-- Roadmap.
+Identify the project core (a minimal working example). This
+is what you should develop first, ideally by week 6. Defining
+a core helps ensure that, despite a tight timeline, we will end
+up with a complete project.
+
+Identify project extensions. These are additional features that
+you will implement after the core of the project is finished; you
+could also propose extensions as open-ended exercises for the ReCoDE
+audience.
+
+Outline the process of creating the exemplar as a project roadmap
+with individual steps. This will help you with defining the scope of 
+the project. When you think about this, imagine that you are explaining
+it to a new PhD student. Assume that this student is from a related (but
+not necessarily same) discipline. They can code but have never undertaken
+a larger project. The steps should follow logical development of the
+project and good practice. Each will be relatively independent and contain
+its own learning annotation and links to other learning materials if
+appropriate. The learning annotation is going to form a significant portion
+of your efforts.
+
+Learning annotations will evolve as we go along but planning now will be useful
+in defining your exemplar steps. Remember that active learning is generally more
+valuable than just reading information, so small exercises that build on previous
+steps can really help your students to understand the software development process.
+You can include videos, text, charts, images, flowcharts, storyboards, or anything
+creative that you may think of.
+
+Completed tasks are marked with an x between the square brackets.
+-->
+<h2 id="roadmap">Roadmap 🗺️</h2>
+<h3 id="core">Core 🧩</h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Install prerequisites and setup environment<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> FSL installation</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> LS-Prepost installation</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Image processing and segmentation<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Does the <em>FAST</em> segmentation produce reasonable result? </li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Does the <em>BET</em> segmentation produce reasonable result? </li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Is the generated geometry file <code>pre_model.nii.gz</code> look reasonable in FSLeyes? </li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Mesh creation and smoothing<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Does the generated mesh look reasonable in LS-PrePost? </li>
+</ul>
+</li>
+</ul>
+<h3 id="extensions">Extensions 🔌</h3>
+<p>(Requires deeper understanding of finite element analysis) </p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Understand the supporting files for FE simulations using the generated mesh<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Material property of the brain </li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Centre of gravity of the brain</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Parts and sets of the brain model</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Acceleration, the mechanical loading apply to the brain model</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Run file, the configuration of FE simulation</li>
+</ul>
+</li>
+</ul>
+<!-- Best practice notes. -->
+<h2 id="best-practice-notes">Best Practice Notes 📝</h2>
+<ul>
+<li>During image processing and segmentation steps, regularly check the intermediate outputs using <a href="https://open.oxcin.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/install.html">FSLeyes</a> if you are running the project locally, or follow <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation/blob/main/#view-neuroimages-in-codespaces">this</a> if you are using with Codespaces. </li>
+</ul>
+<!-- Estimate the time it will take for a learner to progress through the exemplar. -->
+<h2 id="estimated-time">Estimated Time ⏳</h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Estimated time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Introduction</td>
+<td>10 min</td>
+</tr>
+<tr>
+<td>Environment setup</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td>Image processing</td>
+<td>1 hour</td>
+</tr>
+<tr>
+<td>Image visualisation</td>
+<td>1 hour</td>
+</tr>
+<tr>
+<td>Mesh creation</td>
+<td>1 hour</td>
+</tr>
+<tr>
+<td>Mesh visualisation</td>
+<td>1 hour</td>
+</tr>
+<tr>
+<td>Extension</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td><strong>Total Estimated Time</strong></td>
+<td><strong>5 hours</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="citation">Citation 📄</h2>
+<p>Please cite this preprint if you use this repository for your study: </p>
+<blockquote>
+<p>Darvishi V, Chan EY, Duckworth H, Parker TD, Sharp DJ, Ghajari M. PARS: an automated, open-source pipeline for subject-specific finite element head modelling from MRI. bioRxiv. 2026:2026-07.</p>
+</blockquote>
+<h2 id="licence">Licence 📄</h2>
+<p>This project is licensed under the <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation/blob/main/LICENSE.md">BSD-3-Clause license</a>.</p>
+<!-- Add more files in the `docs/` directory for them to be automatically
+included in the Mkdocs documentation -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.top", "toc.follow", "content.code.annotate"], "search": "assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+    
+  </body>
+</html>

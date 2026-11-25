@@ -1,0 +1,658 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../02_ImageProcess/">
+      
+      
+      <link rel="icon" href="../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+    
+    
+      
+        <title>Background: Brain Anatomy, MRI, and Input Images - ReCoDE-brain-mesh-creation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#background-brain-anatomy-mri-and-input-images" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://imperialcollegelondon.github.io/ReCoDE-home/" title="ReCoDE-brain-mesh-creation" class="md-header__button md-logo" aria-label="ReCoDE-brain-mesh-creation" data-md-component="logo">
+      
+  <img src="../assets/iclogo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ReCoDE-brain-mesh-creation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Background: Brain Anatomy, MRI, and Input Images
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://imperialcollegelondon.github.io/ReCoDE-home/" title="ReCoDE-brain-mesh-creation" class="md-nav__button md-logo" aria-label="ReCoDE-brain-mesh-creation" data-md-component="logo">
+      
+  <img src="../assets/iclogo.png" alt="logo">
+
+    </a>
+    ReCoDE-brain-mesh-creation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Background: Brain Anatomy, MRI, and Input Images
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Background: Brain Anatomy, MRI, and Input Images
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-brain-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic brain structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#magnetic-resonance-imaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Magnetic resonance imaging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparing-input-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparing input image
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_ImageProcess/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Image Processing: Preparing Labelled Geometry for Meshing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_FSLeyes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Image Inspection: Checking Processed Outputs Before Meshing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_MeshCreation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mesh Creation: Building, Smoothing, and Refining the Brain Mesh
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_VisualiseMesh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mesh Inspection: Checking Mesh Outputs Before Simulation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Extension: Simulation-supporting files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-brain-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic brain structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#magnetic-resonance-imaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Magnetic resonance imaging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparing-input-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparing input image
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="background-brain-anatomy-mri-and-input-images">Background: Brain Anatomy, MRI, and Input Images</h1>
+<p>Finite element (FE) methods can be used to simulate how structures deform under loading. In brain biomechanics, brain FE models are useful because they allow us to estimate brain deformation in situations where direct measurement is difficult or impossible. To do this, we first need a geometric representation of the brain that can be discretised into elements for computation.</p>
+<p>Because brain anatomy varies between individuals, a single generic brain geometry cannot fully represent the population. Subject-specific brain FE meshes are therefore important, as they better capture anatomical differences between individuals and provide a more realistic basis for later simulation.</p>
+<p>In this project, we go through the full pipeline for turning a brain scan into a subject-specific finite element (FE) mesh. Using a sample scan from a healthy subject, you will see how raw imaging data can be processed into a mesh that captures the shape of an individual brain. Once you understand the workflow, the same approach can be applied to other brain scans too — in other words, it can be used to generate a brain FE mesh for any subject with the right imaging input. The final output of this project is the FE mesh itself, which describes the brain geometry in a form ready for numerical analysis. To turn this mesh into a complete FE model for simulation, the mesh would need to be combined with additional files such as material properties, boundary conditions, and loading definitions.</p>
+<h2 id="basic-brain-structure">Basic brain structure</h2>
+<p>The brain can be thought of as several connected tissue compartments rather than one single solid structure. The main bulk of the brain is made up of grey matter and white matter. Grey matter includes the cerebral cortex and several deeper structures such as the thalamus, caudate, putamen, hippocampus, and amygdala. White matter contains fibre pathways that connect different brain regions, including the corpus callosum, which links the left and right cerebral hemispheres.</p>
+<p>The brain also contains fluid-filled spaces called ventricles. These include the lateral ventricles, third ventricle, and fourth ventricle. The ventricles contain cerebrospinal fluid (CSF), which also surrounds the outside of the brain in the subarachnoid space. CSF is important because it separates the soft brain tissue from the skull and forms part of the brain–skull interface.</p>
+<p><img alt="Basic brain anatomy" src="../assets/01_brain_anatomy.png" /></p>
+<p><em>Figure 1. Basic brain anatomy. Image source: <a href="https://www.everydayhealth.com/healthy-aging/understanding-brain-anatomy/">Everyday health</a>.</em></p>
+<p>Several protective membranes surround and support the brain. The pia mater is a thin membrane closely attached to the brain surface, while the dura mater is a tougher outer membrane lining the inside of the skull. Some parts of the dura fold inward to form internal partitions. The falx separates the left and right cerebral hemispheres, and the tentorium separates the cerebrum from the cerebellum.</p>
+<p><img alt="Layers of the brain" src="../assets/01_brain_layers.png" /></p>
+<p><em>Figure 2. Layers of the brain. Image source: Cleveland Clinic, <a href="https://my.clevelandclinic.org/health/body/22638-brain">Brain: Anatomy, Function, and Conditions</a>.</em></p>
+<p>The brain sits inside the skull, with skin forming the outer head surface. For finite element modelling, these outer structures are also useful because they help define the full head geometry rather than only the brain itself. The skull provides the rigid outer boundary, while the skin defines the external head shape.</p>
+<p>In this project, the final model represents many of these anatomical compartments as separate labelled parts. The detailed internal brain labels mainly come from the FreeSurfer anatomical segmentation, while FSL-derived masks are used to complete the CSF, skull, and skin regions. Additional structures such as the falx, tentorium, dura, and pia are included later during model generation so that the final mesh better represents the main anatomical boundaries needed for head impact simulation.</p>
+<h2 id="magnetic-resonance-imaging">Magnetic resonance imaging</h2>
+<p>The starting point of this project is a <strong>magnetic resonance imaging (MRI) scan</strong> of the brain. MRI is a widely used way of imaging soft tissues inside the body, and it is especially useful for the brain because it can show anatomical detail much more clearly than many other imaging methods. Instead of looking at function or activity, here we are interested in structural MRI, which shows the shape and internal structure of the brain.</p>
+<p>In this project, the main scan type is a <strong>T1-weighted MRI</strong>. This is one of the most common structural brain scans used in both hospitals and research. It gives a clear view of brain anatomy and provides good contrast between different tissues, which makes it a strong starting point for image processing and mesh generation.</p>
+<p>However, the scan straight from the scanner is only the beginning. Before it can be used to generate an FE mesh, it needs to be processed so that the brain can be separated from surrounding tissues and different anatomical regions can be identified more clearly.</p>
+<h2 id="preparing-input-image">Preparing input image</h2>
+<p>T1-weighted image is processed generated by FreeSurfer <em>recon-all</em>, an automated process for structural brain MRI analysis. The <em>recon-all</em> performs a sequence of cortical reconstruction steps including intensity normalisation, skull stripping, and subcortical segmentation, and it produces a large set of outputs for different stages of brain image processing, including skull-stripped images, tissue segmentations, surface reconstructions, anatomical labels, and other intermediate files. </p>
+<p>Three FreeSurfer outputs are used in this workflow: <code>T1.mgz</code>, <code>brain.mgz</code>, and <code>aseg.mgz</code>.</p>
+<ul>
+<li><code>T1.mgz</code> is the processed T1-weighted structural image. In FreeSurfer, this file is the intensity-normalised version of the input anatomical scan and serves as the main reference image for later steps.</li>
+<li><code>brain.mgz</code> is the brain-extracted image. It keeps the brain while removing non-brain tissues, making later processing easier to focus on the anatomy of interest. In the standard FreeSurfer stream, skull stripping produces the brain mask volumes used for this purpose.</li>
+<li><code>aseg.mgz</code> is the automated segmentation file. It contains labels for major anatomical regions and tissue classes, providing structural information that is useful for downstream processing.</li>
+</ul>
+<p><img alt="Input Freesurfer images: T1, brain, and aseg" src="../assets/01_freesurfer_imgs.png" /></p>
+<p>We do not run <em>recon-all</em> as part of this project for two reasons. First, it is a fully automated preprocessing step, so there is not much to demonstrate once the input scan has been given to the software. Second, it can take a long time to complete for one subject, usually a few hours (sometimes up to 40 hours!). To keep this project focused and practical, we start from pre-generated FreeSurfer outputs and use them directly in this mesh-generation pipeline. </p>
+<p>As an initial step, these files are converted from the MGZ format to NIfTI (<code>.nii.gz</code>) format using FreeSurfer’s <code>mri_convert</code> tool. NIfTI is a common neuroimaging file format and is easier to use in the processing steps that follow.</p>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li>Guidance for running recon-all from raw MRI data is available in the official <a href="https://surfer.nmr.mgh.harvard.edu/fswiki/recon-all">FreeSurfer documentation</a>.</li>
+<li><a href="https://andysbrainbook.readthedocs.io/en/latest/FreeSurfer/FreeSurfer_Introduction.html">FreeSurfer Short Course</a> by Andy's Brain Book. </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.top", "toc.follow", "content.code.annotate"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+    
+  </body>
+</html>

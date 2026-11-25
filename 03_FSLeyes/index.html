@@ -1,0 +1,1001 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../02_ImageProcess/">
+      
+      
+        <link rel="next" href="../04_MeshCreation/">
+      
+      
+      <link rel="icon" href="../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+    
+    
+      
+        <title>Image Inspection: Checking Processed Outputs Before Meshing - ReCoDE-brain-mesh-creation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#image-inspection-checking-processed-outputs-before-meshing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://imperialcollegelondon.github.io/ReCoDE-home/" title="ReCoDE-brain-mesh-creation" class="md-header__button md-logo" aria-label="ReCoDE-brain-mesh-creation" data-md-component="logo">
+      
+  <img src="../assets/iclogo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ReCoDE-brain-mesh-creation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Image Inspection: Checking Processed Outputs Before Meshing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://imperialcollegelondon.github.io/ReCoDE-home/" title="ReCoDE-brain-mesh-creation" class="md-nav__button md-logo" aria-label="ReCoDE-brain-mesh-creation" data-md-component="logo">
+      
+  <img src="../assets/iclogo.png" alt="logo">
+
+    </a>
+    ReCoDE-brain-mesh-creation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Background: Brain Anatomy, MRI, and Input Images
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_ImageProcess/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Image Processing: Preparing Labelled Geometry for Meshing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Image Inspection: Checking Processed Outputs Before Meshing
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Image Inspection: Checking Processed Outputs Before Meshing
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-fsleyes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using FSLeyes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using FSLeyes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-quick-tour-of-the-fsleyes-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      A quick tour of the FSLeyes interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-the-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loading the images
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#view-nifti-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      View NIfTI files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="View NIfTI files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anatomical-reference-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anatomical reference image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#labelled-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Labelled segmentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fast-hard-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      FAST hard segmentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#brain-extraction-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Brain extraction outputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-explore-the-fast-probability-maps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise: Explore the FAST probability maps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-display-tips-in-fsleyes" class="md-nav__link">
+    <span class="md-ellipsis">
+      💡 Summary: display tips in FSLeyes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extended-exploration-in-fsleyes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extended exploration in FSLeyes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extended exploration in FSLeyes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exploring-the-3d-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploring the 3D view
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightbox-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lightbox view
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atlas-and-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Atlas and labels
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#moving-on-to-mesh-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Moving on to mesh generation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_MeshCreation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mesh Creation: Building, Smoothing, and Refining the Brain Mesh
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_VisualiseMesh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mesh Inspection: Checking Mesh Outputs Before Simulation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Extension: Simulation-supporting files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-fsleyes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using FSLeyes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using FSLeyes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-quick-tour-of-the-fsleyes-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      A quick tour of the FSLeyes interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-the-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loading the images
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#view-nifti-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      View NIfTI files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="View NIfTI files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anatomical-reference-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anatomical reference image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#labelled-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Labelled segmentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fast-hard-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      FAST hard segmentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#brain-extraction-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Brain extraction outputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-explore-the-fast-probability-maps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise: Explore the FAST probability maps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-display-tips-in-fsleyes" class="md-nav__link">
+    <span class="md-ellipsis">
+      💡 Summary: display tips in FSLeyes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extended-exploration-in-fsleyes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extended exploration in FSLeyes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extended exploration in FSLeyes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exploring-the-3d-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploring the 3D view
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightbox-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lightbox view
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atlas-and-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Atlas and labels
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#moving-on-to-mesh-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Moving on to mesh generation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="image-inspection-checking-processed-outputs-before-meshing">Image Inspection: Checking Processed Outputs Before Meshing</h1>
+<p>In <code>02_ImageProcess.ipynb</code>, we generated a series of intermediate NIfTI outputs. In this page, we use <strong>FSLeyes</strong> to inspect these outputs visually. The goal is not only to become familiar with the software interface, but also to understand what each processing step has produced and to check that the final brain geometry is suitable for downstream FE mesh generation.</p>
+<h2 id="using-fsleyes">Using FSLeyes</h2>
+<h3 id="a-quick-tour-of-the-fsleyes-interface">A quick tour of the FSLeyes interface</h3>
+<p>FSLeyes can be used either from the command line or through its graphical interface. In this exercise, we use the graphical interface to inspect the outputs from FSL segmentations. Before examining those images, it is helpful to become familiar with the small set of controls that will be used repeatedly throughout this page.</p>
+<p><a href="../assets/03_fsleyes_interface_annotated.png"><img alt="Annotated FSLeyes interface showing the main controls used in this page." src="../assets/03_fsleyes_interface_annotated.png" /></a></p>
+<p><em>(Click the image to open a larger version)</em></p>
+<p>The most useful parts of the interface for this exercise are:</p>
+<ul>
+<li><strong>View area</strong>: displays the current image in one or more planes</li>
+<li><strong>Overlay list</strong>: shows the loaded images and allows them to be shown, hidden, and reordered</li>
+<li><strong>Display settings</strong>: used to change the appearance of the selected overlay</li>
+<li><strong>Colour map selector</strong>: useful when displaying segmentation or label images</li>
+<li><strong>Opacity control</strong>: helps compare an overlay with the anatomical underlay</li>
+<li><strong>Location/value readout</strong>: can be useful when inspecting label images</li>
+</ul>
+<h3 id="loading-the-images">Loading the images</h3>
+<p>Once FSL has been installed, <strong>FSLeyes</strong> can be launched from terminal by simply typing <code>fsleyes</code>. Launch FSLeyes and load <code>brain_std.nii.gz</code> by dragging the image file into FSLeyes interface. This is the anatomical image of the example subject <code>avg_male</code> registered to the MNI space, and we use it as the underlay for most of the inspection steps below. </p>
+<p>For most of this page, the <strong>orthographic view</strong> is the most useful choice, as it allows the image to be inspected simultaneously in sagittal, coronal, and axial planes.</p>
+<h2 id="view-nifti-files">View NIfTI files</h2>
+<h3 id="anatomical-reference-image">Anatomical reference image</h3>
+<p>The <code>brain_std</code> is now in the FSLeyes interface. When viewing the image, readers should focus on the overall brain shape, the appearance of the cortical folds, and the relative position of internal structures across the three slice views. </p>
+<h3 id="labelled-segmentation">Labelled segmentation</h3>
+<p>Our input also includes labelled segmentation information, such as <code>aseg_std.nii.gz</code>, which can be viewed in FSLeyes as a labelled overlay.</p>
+<p><img alt="Labelled segmentation image overlaid on the anatomical reference image." src="../assets/03_fsleyes_aseg.png" /></p>
+<p>Load <code>aseg_std.nii.gz</code> on top of the anatomical reference image <code>brain_std</code>. As with the FAST hard segmentation, a categorical colour map is appropriate here because the image contains labelled regions rather than a continuous intensity scale. Since <code>aseg</code> is the subcortical segmentation of a brain, the colour map <strong>MGH Subcortical</strong> could be a good option. Adjust the opacity so that both the labels and the anatomical structures can still be seen. </p>
+<p>This view helps readers connect segmentation outputs with anatomical interpretation. Rather than focusing on exact region names, the main aim is to recognise that different coloured regions correspond to different labelled structures and that these labels should lie in plausible anatomical locations. This is a useful bridge between image processing outputs and the structure of the brain itself.</p>
+<h3 id="fast-hard-segmentation">FAST hard segmentation</h3>
+<p><strong>FAST</strong> was used to segment the brain image into tissue classes. A useful output to inspect first is the hard segmentation image, <code>brain_std_seg</code>.</p>
+<p><img alt="FAST hard segmentation." src="../assets/03_fsleyes_fast_hardseg.png" /></p>
+<!-- { caption="Figure 1. Annotated FSLeyes interface showing the main controls used in this page." } -->
+
+<p>Load <code>brain_std_seg</code> as an overlay on <code>brain_std</code>. Because this image contains <strong>discrete tissue classes</strong> rather than continuous intensities, a categorical colour map is more appropriate than a continuous one. A map such as <strong>Random 2</strong> works well here because it colours different classes with distinct colours, and it makes neighbouring classes easier to distinguish. Adjust the overlay opacity until both the segmentation and the anatomy are visible clearly.</p>
+<p>When inspecting this image, readers should look for whether the tissue classes occupy plausible regions and whether the boundaries of the segmentation broadly follow the underlying anatomy. The purpose here is not to assess every voxel in detail, but to check that the segmentation is behaving reasonably and producing interpretable tissue regions.</p>
+<h3 id="brain-extraction-outputs">Brain extraction outputs</h3>
+<p><strong>BET</strong> and <strong>BETSURF</strong> were also used to define the brain region and related boundaries. These outputs help isolate the anatomy of interest and remove non-brain tissue before later processing steps.</p>
+<p><img alt="Brain extraction result displayed as an overlay on the anatomical reference image." src="../assets/03_fsleyes_betskull_on_bet.png" /></p>
+<p>Load the brain extraction output <code>T1_bet_skull</code> as an overlay on the anatomical reference. A transparent overlay works well here, as it allows the extracted region to be compared directly against the brain boundaries visible in the underlay. It is often helpful to reduce the opacity slightly so that the anatomical reference image remains visible underneath.</p>
+<p>When viewing this result, readers should check whether the brain tissue has been retained while non-brain tissue has been excluded appropriately. It is useful to look especially at the frontal and inferior boundaries, where extraction can sometimes become too tight or too loose. This visual check helps confirm that the extraction step has produced a plausible representation of the brain region.</p>
+<h3 id="pre-model">Pre-model</h3>
+<p>The final and most important visual check in this page is the <strong>pre_model</strong> image, created by combining selected intermediate outputs using <code>fslmaths</code>. It forms the basis for the later mesh-generation step. Unlike the earlier images, which show individual segmentation or extraction results, the pre-model brings those processed regions together into a single labelled geometry image.</p>
+<p>Load the premodel image as an overlay on <code>brain_std</code>. Because this is a <strong>label image</strong>, a categorical colour map is the most appropriate choice. Each integer value in the image corresponds to a different region or material class in the geometry, so the colours are used to distinguish labels rather than to represent a continuous intensity scale. Adjust the opacity until both the geometry and the underlying anatomy can be seen clearly.</p>
+<p><img alt="Premodel image." src="../assets/03_fsleyes_premodel.png" /></p>
+<p>The <code>brain_std</code> or other images shown previously are true MRI intensity images. Unlike those images, the premodel is not intended to look like a natural anatomical scan. The anatomical reference image retains smooth intensity variation, familiar tissue contrast, and continuous-looking boundaries, so it often appears visually coherent and “organic”, even in clipped or 3D views. By contrast, the premodel is a <strong>derived label and geometry image</strong>, created by combining masks and segmented regions using <code>fslmaths</code>. Its voxel values therefore represent <strong>discrete classes or regions</strong>, rather than continuous anatomical signal intensity. As a result, it tends to show sharper boundaries, less internal texture, and more obvious voxel-grid structure, particularly in 3D renderings. This can make the premodel appear rougher or less visually appealing than the earlier images, but this is a consequence of its purpose: it is designed to encode the regions needed for downstream mesh generation, rather than to preserve the visual appearance of the original anatomy. In that sense, it is better understood as a <strong>construction map for meshing</strong> than as a photograph-like image of the brain.</p>
+<p>To inspect the labels more closely, move the cursor over the image and click on different regions. In FSLeyes, the voxel value at the current location is shown in the interface, allowing you to check which label is present at that point. This is useful for confirming that different parts of the geometry have been assigned the expected values. If needed, the colour map and display settings can also be adjusted to make neighbouring labelled regions easier to distinguish.</p>
+<p>When inspecting this result, readers should look for whether the geometry appears spatially coherent and whether the labelled regions form a sensible overall structure. There should not be obvious holes, isolated fragments, or unexpected discontinuities. It is also helpful to compare the geometry against the anatomical underlay and check whether the labelled regions lie in plausible positions. Compared with the earlier intermediate outputs, this image should look more task-specific and more directly suited to the geometry required for mesh generation. This is the key visual checkpoint before moving on.</p>
+<h2 id="exercise-explore-the-fast-probability-maps">Exercise: Explore the FAST probability maps</h2>
+<p>In addition to the hard segmentation image, FAST also produces three <strong>partial volume estimate</strong> images:</p>
+<ul>
+<li><code>brain_std_pve_0</code></li>
+<li><code>brain_std_pve_1</code></li>
+<li><code>brain_std_pve_2</code></li>
+</ul>
+<p>These are <strong>tissue probability maps</strong>, not hard label images. Each one shows the degree to which a voxel belongs to a given tissue class.</p>
+<p>As a short exercise, load these three images one at a time as overlays on <code>brain_std</code> and compare their distributions.</p>
+<p>Try to answer the following questions:</p>
+<ol>
+<li>Which probability map appears strongest in fluid-filled spaces?</li>
+<li>Which probability map appears strongest in cortical tissue?</li>
+<li>Which probability map appears strongest in deeper white matter regions?</li>
+<li>Where do the maps appear less certain or more mixed?</li>
+</ol>
+<details class="note">
+<summary>Suggested answer</summary>
+<p>In the following figure, the top image is the <code>brain_std_seg</code>, the FAST output which divided the brain into discrete tissue classes; each voxel is assigned to one tissue class only. The following three images represent the probability of belonging to the three FAST tissue classes. In a typical brain segmentation, they correspond broadly to CSF, grey matter, and white matter.</p>
+<ul>
+<li><code>brain_std_pve_0</code> is typically strongest in <strong>CSF-like spaces</strong></li>
+<li><code>brain_std_pve_1</code> is typically strongest in <strong>grey matter</strong></li>
+<li><code>brain_std_pve_2</code> is typically strongest in <strong>white matter</strong></li>
+</ul>
+<p>Uncertainty is often most visible near tissue boundaries, where voxels may contain a mixture of tissue types.</p>
+<p><img alt="FAST probability map 0 shown in FSLeyes." src="../assets/03_fsleyes_pve012.png" /></p>
+</details>
+<h2 id="summary-display-tips-in-fsleyes">💡 Summary: display tips in FSLeyes</h2>
+<p>A few simple display adjustments can make visual inspection much easier:</p>
+<ul>
+<li>If an overlay hides too much of the anatomy, reduce its <strong>opacity</strong></li>
+<li>For segmentation or label images, use a <strong>categorical colour map</strong> rather than a continuous one</li>
+<li>If the view becomes cluttered, inspect <strong>one overlay at a time</strong></li>
+<li>If a boundary is hard to interpret, compare the same location across the <strong>sagittal, coronal, and axial</strong> views</li>
+<li>Keep the brain anatomical reference <code>brain.nii.gz</code> or the same one in MNI space <code>brain_std.nii.gz</code> as the anatomical underlay for consistency while switching between overlays</li>
+</ul>
+<p>These small adjustments often make it much easier to compare outputs and understand what each processing step has produced.</p>
+<h2 id="extended-exploration-in-fsleyes">Extended exploration in FSLeyes</h2>
+<p>FSLeyes also provides several additional viewing modes and tools that can help readers explore the images in more depth. These are not required for the workflow itself, but they are useful for developing a better visual understanding of the data and the processed outputs.</p>
+<h3 id="exploring-the-3d-view">Exploring the 3D view</h3>
+<p>FSLeyes also provides a 3D view, which can be used to inspect the overall shape of an image or overlay. This was already used for serveral images above. </p>
+<p>To open the 3D display, switch from orthographic to 3D view. In this view, the image can be rotated, zoomed, and repositioned. This gives a more global impression of the structure than slice-based views, although it is usually less precise for detailed inspection.</p>
+<p>One particularly useful feature is the ability to clip the 3D view, so that the inside of a structure becomes visible. By applying clipping planes, readers can cut through the rendered image and inspect internal regions that would otherwise remain hidden inside the outer surface. This is useful, for example, when viewing the brain anatomy or the geometry image in three dimensions.</p>
+<p>In a clipped 3D view, the anatomy can look very different from the orthographic slice views. This is because the rendered object is being displayed as a volume in three-dimensional space, and the clipping plane reveals its interior by removing part of the outer volume. For anatomical intensity images such as brain.nii.gz, this often produces a visually smooth and recognisable result. For label or geometry images such as the premodel, however, the 3D appearance may look rougher and more voxel-like, because these images contain discrete classes rather than continuous anatomical intensity.</p>
+<p>The 3D view is therefore best used as a complementary visualisation tool. It is useful for understanding overall shape and spatial relationships, but it should not replace slice-based inspection when readers need to check boundaries, labels, or fine details.</p>
+<h3 id="lightbox-view">Lightbox view</h3>
+<p>In addition to the standard orthographic view, FSLeyes also provides a lightbox view, which displays many slices from the same plane at once. This can be useful when readers want to inspect how a structure extends across the brain, rather than examining one slice at a time.</p>
+<p>To use this view, switch the display layout from orthographic to lightbox, then choose the slice direction of interest. The axial direction is often a good starting point, but sagittal and coronal lightbox views can also be informative depending on the structure being inspected.</p>
+<p>Lightbox view is particularly helpful for images such as the FAST segmentation outputs or the final premodel image, because it allows readers to assess continuity across multiple slices. For example, a structure that appears plausible in one slice may be seen to fragment or disappear unexpectedly when viewed across the full stack. In this way, lightbox view can complement the orthographic view by providing a more global slice-based overview.</p>
+<h3 id="atlas-and-labels">Atlas and labels</h3>
+<p>FSLeyes can also display atlas information, which can help readers relate image locations to anatomical structures. This is especially useful when working with labelled images such as aseg.nii.gz, where different integer values correspond to different regions.</p>
+<p>To explore labels, first load a labelled image and move the cursor across different structures in the image. The interface will show the voxel value at the current location, allowing readers to see which label is present in that region. This is the simplest way to inspect labelled segmentations directly.</p>
+<p>Atlas tools provide an additional level of interpretation. Rather than only seeing the numerical label value, readers can also query anatomical regions using the atlas facilities available in FSLeyes. This can be useful when trying to understand where a structure lies in relation to commonly recognised brain regions, or when comparing a label image with a more standard anatomical reference.</p>
+<p>At this stage, the goal is not to carry out detailed anatomical annotation, but rather to begin connecting segmentation outputs with anatomical meaning. Readers may find it useful to compare aseg.nii.gz with the anatomical underlay and use the displayed label values as a guide to which structures have been segmented.</p>
+<h2 id="moving-on-to-mesh-generation">Moving on to mesh generation</h2>
+<p>Once the final premodel image has been checked visually, the workflow can proceed to the next stage of mesh generation. Although this inspection step is simple, it is important: checking the geometry at this stage can help identify problems early, before later and more computationally expensive processing begins.</p>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://open.oxcin.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/index.html">FSLeyes documentations</a></li>
+<li>Did you know that you can use FSLeyes from Jupyter? <a href="https://open.oxcin.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/fsleyes_notebook.html">The <code>fsleyes</code> package</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.top", "toc.follow", "content.code.annotate"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+    
+  </body>
+</html>

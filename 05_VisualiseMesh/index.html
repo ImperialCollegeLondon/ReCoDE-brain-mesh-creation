@@ -1,0 +1,956 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../04_MeshCreation/">
+      
+      
+        <link rel="next" href="../06_Simulation/">
+      
+      
+      <link rel="icon" href="../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+    
+    
+      
+        <title>Mesh Inspection: Checking Mesh Outputs Before Simulation - ReCoDE-brain-mesh-creation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mesh-inspection-checking-mesh-outputs-before-simulation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://imperialcollegelondon.github.io/ReCoDE-home/" title="ReCoDE-brain-mesh-creation" class="md-header__button md-logo" aria-label="ReCoDE-brain-mesh-creation" data-md-component="logo">
+      
+  <img src="../assets/iclogo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ReCoDE-brain-mesh-creation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mesh Inspection: Checking Mesh Outputs Before Simulation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://imperialcollegelondon.github.io/ReCoDE-home/" title="ReCoDE-brain-mesh-creation" class="md-nav__button md-logo" aria-label="ReCoDE-brain-mesh-creation" data-md-component="logo">
+      
+  <img src="../assets/iclogo.png" alt="logo">
+
+    </a>
+    ReCoDE-brain-mesh-creation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ImperialCollegeLondon/ReCoDE-brain-mesh-creation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Background: Brain Anatomy, MRI, and Input Images
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_ImageProcess/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Image Processing: Preparing Labelled Geometry for Meshing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_FSLeyes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Image Inspection: Checking Processed Outputs Before Meshing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_MeshCreation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mesh Creation: Building, Smoothing, and Refining the Brain Mesh
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Mesh Inspection: Checking Mesh Outputs Before Simulation
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mesh Inspection: Checking Mesh Outputs Before Simulation
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-preparing-the-visualisation-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Preparing the visualisation files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-opening-the-mesh-in-ls-prepost" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Opening the mesh in LS-PrePost
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-comparing-mesh-stages" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Comparing mesh stages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Comparing mesh stages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raw-mesh-meshk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raw mesh: mesh.k
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smoothed-mesh-mesh_smoothedk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Smoothed mesh: mesh_smoothed.k
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revised-mesh-mesh_smoothed_revisedk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Revised mesh: mesh_smoothed_revised.k
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-inspecting-parts-and-sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Inspecting parts and sets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Inspecting parts and sets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Part list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set list
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Extension: Simulation-supporting files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-preparing-the-visualisation-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Preparing the visualisation files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-opening-the-mesh-in-ls-prepost" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Opening the mesh in LS-PrePost
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-comparing-mesh-stages" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Comparing mesh stages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Comparing mesh stages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raw-mesh-meshk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raw mesh: mesh.k
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smoothed-mesh-mesh_smoothedk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Smoothed mesh: mesh_smoothed.k
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revised-mesh-mesh_smoothed_revisedk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Revised mesh: mesh_smoothed_revised.k
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-inspecting-parts-and-sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Inspecting parts and sets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Inspecting parts and sets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Part list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set list
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="mesh-inspection-checking-mesh-outputs-before-simulation">Mesh Inspection: Checking Mesh Outputs Before Simulation</h1>
+<h2 id="overview">Overview</h2>
+<p>After generating the brain mesh, it is useful to inspect it in LS-PrePost before using it for simulation.</p>
+<p>In this step, we will:</p>
+<ol>
+<li>prepare a visualisation keyword file;</li>
+<li>open the mesh in LS-PrePost;</li>
+<li>compare the raw, smoothed, and revised meshes;</li>
+<li>inspect the part and set definitions.</li>
+</ol>
+<p>The main mesh files are:</p>
+<ul>
+<li><code>mesh.k</code>: Raw voxel-based mesh</li>
+<li><code>mesh_smoothed.k</code>: Mesh after smoothing</li>
+<li><code>mesh_smoothed_revised.k</code>: Final mesh after brain–skull contact correction</li>
+</ul>
+<p>Additional files used for visualisation:</p>
+<ul>
+<li><code>part_list_full.k</code>: Reusable part definitions</li>
+<li><code>set_list.k</code>: Subject-specific set definitions</li>
+</ul>
+<hr />
+<h2 id="1-preparing-the-visualisation-files">1. Preparing the visualisation files</h2>
+<p>Create a dedicated visualisation folder for the subject:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">SUBJECT</span><span class="o">=</span><span class="s2">"sub0045"</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>data/subjects/<span class="si">${</span><span class="nv">SUBJECT</span><span class="si">}</span>/visualise
+</code></pre></div>
+<p>Copy the mesh files and subject-specific set list into this folder:</p>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>data/subjects/<span class="si">${</span><span class="nv">SUBJECT</span><span class="si">}</span>/output/mesh.k<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>data/subjects/<span class="si">${</span><span class="nv">SUBJECT</span><span class="si">}</span>/output/mesh_smoothed.k<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>data/subjects/<span class="si">${</span><span class="nv">SUBJECT</span><span class="si">}</span>/output/mesh_smoothed_revised.k<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>data/subjects/<span class="si">${</span><span class="nv">SUBJECT</span><span class="si">}</span>/output/set_list.k<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>data/subjects/<span class="si">${</span><span class="nv">SUBJECT</span><span class="si">}</span>/visualise/
+</code></pre></div>
+<p>The <code>set_list.k</code> file is subject-specific because the node and element sets depend on the generated geometry.</p>
+<p>The reusable part list is provided in:</p>
+<div class="highlight"><pre><span></span><code>src/dependencies/rs/part_list_full.k
+</code></pre></div>
+<p>Create a wrapper keyword file in the visualisation folder:</p>
+<div class="highlight"><pre><span></span><code>touch<span class="w"> </span>data/subjects/<span class="si">${</span><span class="nv">SUBJECT</span><span class="si">}</span>/visualise/visualise_mesh.k
+</code></pre></div>
+<p>Add the following content to <code>visualise_mesh.k</code>:</p>
+<div class="highlight"><pre><span></span><code>*KEYWORD
+*INCLUDE
+mesh_smoothed_revised.k
+*INCLUDE
+set_list.k
+*INCLUDE
+../../../../src/dependencies/rs/part_list_full.k
+*END
+</code></pre></div>
+<p>This wrapper file allows LS-PrePost to load the final mesh together with the part and set definitions.</p>
+<hr />
+<h2 id="2-opening-the-mesh-in-ls-prepost">2. Opening the mesh in LS-PrePost</h2>
+<p>Open LS-PrePost and load the wrapper file:</p>
+<div class="highlight"><pre><span></span><code>File → Open → Keyword
+</code></pre></div>
+<p>Select:</p>
+<div class="highlight"><pre><span></span><code>visualise_mesh.k
+</code></pre></div>
+<p>After loading, the mesh should appear in the main graphics window.</p>
+<p>Useful controls:</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rotate</td>
+<td>Left mouse drag</td>
+</tr>
+<tr>
+<td>Pan</td>
+<td>Middle mouse drag</td>
+</tr>
+<tr>
+<td>Zoom</td>
+<td>Scroll wheel</td>
+</tr>
+<tr>
+<td>Fit model to screen</td>
+<td><code>Ctrl + F</code></td>
+</tr>
+</tbody>
+</table>
+<p>The main LS-PrePost areas used here are:</p>
+<ul>
+<li>the graphics window, where the mesh is displayed;</li>
+<li>the part display panel, where individual parts can be shown or hidden;</li>
+<li>the message/command window, where loading warnings may appear.</li>
+</ul>
+<p><img alt="LS-PrePost interface after loading the mesh" src="../assets/05_lsprepost_interface_loaded_mesh.png" /></p>
+<hr />
+<h2 id="3-comparing-mesh-stages">3. Comparing mesh stages</h2>
+<p>It is helpful to compare the raw, smoothed, and revised meshes to understand what each processing step has changed.</p>
+<p>You can either edit <code>visualise_mesh.k</code> to include a different mesh file, or create separate wrapper files for each stage.</p>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code>*KEYWORD
+*INCLUDE
+mesh.k
+*INCLUDE
+set_list.k
+*INCLUDE
+../../../../src/dependencies/rs/part_list_full.k
+*END
+</code></pre></div>
+<p>for the raw mesh.</p>
+<h3 id="raw-mesh-meshk">Raw mesh: <code>mesh.k</code></h3>
+<p>The raw mesh is generated directly from the voxel-based pipeline.</p>
+<p>Check for:</p>
+<ul>
+<li>overall brain-like geometry;</li>
+<li>both hemispheres present;</li>
+<li>no obvious missing regions;</li>
+<li>expected blocky or stair-step surface.</li>
+</ul>
+<p><img alt="Raw mesh full view" src="../assets/05_raw_mesh_full_view.png" /></p>
+<p><img alt="Raw mesh close-up showing voxel-like surface" src="../assets/05_raw_mesh_surface_closeup.png" /></p>
+<h3 id="smoothed-mesh-mesh_smoothedk">Smoothed mesh: <code>mesh_smoothed.k</code></h3>
+<p>The smoothed mesh should have a cleaner surface.</p>
+<p>Check for:</p>
+<ul>
+<li>reduced jagged edges;</li>
+<li>smoother outer surface;</li>
+<li>no excessive shrinkage;</li>
+<li>no obvious surface folding or distortion.</li>
+</ul>
+<p><img alt="Smoothed mesh surface close-up" src="../assets/05_smoothed_mesh_surface_closeup.png" /></p>
+<h3 id="revised-mesh-mesh_smoothed_revisedk">Revised mesh: <code>mesh_smoothed_revised.k</code></h3>
+<p>The revised mesh is the final mesh after brain–skull contact correction.</p>
+<p>Check for:</p>
+<ul>
+<li>smooth final geometry;</li>
+<li>no obvious brain–skull intersections;</li>
+<li>no visible penetrations or overlapping regions;</li>
+<li>no unexpected holes or gaps.</li>
+</ul>
+<!-- 
+![Revised mesh contact-region close-up](assets/05_revised_mesh_contact_closeup.png)
+
+A before/after comparison between `mesh_smoothed.k` and `mesh_smoothed_revised.k` is useful for showing the effect of the contact correction step.
+
+![Before and after contact correction comparison](assets/05_contact_correction_comparison.png)
+ -->
+
+<hr />
+<h2 id="4-inspecting-parts-and-sets">4. Inspecting parts and sets</h2>
+<p>The wrapper file also loads:</p>
+<div class="highlight"><pre><span></span><code>part_list_full.k
+set_list.k
+</code></pre></div>
+<p>These make the mesh easier to inspect in LS-PrePost.</p>
+<h3 id="part-list">Part list</h3>
+<p>The part list defines the model parts and allows LS-PrePost to display them by part ID or colour.</p>
+<p>Use the part display panel to show, hide, or isolate different parts.</p>
+<h3 id="set-list">Set list</h3>
+<p>The <code>set_list.k</code> file contains <strong>collections of nodes or elements grouped into sets</strong>. These are generated during mesh creation and are specific to each subject.</p>
+<p>In LS-PrePost, you will typically see two main types:</p>
+<ul>
+<li>A <strong>node set</strong> is a group of mesh nodes (points in space). In the interface, these appear under: <code>Set → Part</code></li>
+<li>They are closely related to the <code>part_list_full.k</code> definitions.</li>
+</ul>
+<p><strong>What they are used for:</strong>
+- isolating anatomical regions;
+- assigning material properties;
+- controlling visibility in LS-PrePost.</p>
+<p><img alt="Example highlighted node set in LS-PrePost" src="../assets/05_mesh_highlighted_set.png" /></p>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>The final revised mesh should have:</p>
+<ul>
+<li>a plausible brain shape;</li>
+<li>both hemispheres and inferior regions present;</li>
+<li>smooth surface geometry;</li>
+<li>no obvious holes or missing regions;</li>
+<li>no visible brain–skull intersections;</li>
+<li>correctly loaded part and set definitions.</li>
+</ul>
+<p>Once these checks look reasonable, the mesh is ready for the simulation setup steps. </p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.top", "toc.follow", "content.code.annotate"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+    
+  </body>
+</html>
